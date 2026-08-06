@@ -82,7 +82,7 @@ const LuxuryNavigation = () => {
 
   const handleDownloadCV = () => {
     // Replace 'YOUR_CV_URL' with your actual CV file URL
-    const cvUrl = "YOUR_CV_URL"; // e.g., "/cv/Tharuka_Karunarathne_Resume.pdf"
+    const cvUrl = "public/cv/Resume0.pdf"; // e.g., "/cv/Tharuka_Karunarathne_Resume.pdf"
     const link = document.createElement("a");
     link.href = cvUrl;
     link.download = "Tharuka_Karunarathne_Resume.pdf";
