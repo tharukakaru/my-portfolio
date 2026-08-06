@@ -1,7 +1,9 @@
-import { motion, useScroll, useTransform, useMotionValue, useSpring, animate } from "framer-motion";
+import { motion, useScroll, useTransform, useMotionValue, useSpring, animate, AnimatePresence } from "framer-motion";
 import { useRef, useState, useEffect } from "react";
 import OceanCanvas from "./effects/OceanCanvas";
 import FloatingCode from "./effects/FloatingCode";
+
+const roles = ["Junior Software Engineer", "UI/UX Designer", "AI Engineer"];
 
 const LuxuryHeroSection = () => {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -12,6 +14,7 @@ const LuxuryHeroSection = () => {
   
   const [isLoaded, setIsLoaded] = useState(false);
   const [mousePos, setMousePos] = useState({ x: 0.5, y: 0.5 });
+  const [currentRoleIndex, setCurrentRoleIndex] = useState(0);
   
   const cursorX = useMotionValue(0.5);
   const cursorY = useMotionValue(0.5);
@@ -22,6 +25,17 @@ const LuxuryHeroSection = () => {
     const timer = setTimeout(() => setIsLoaded(true), 100);
     return () => clearTimeout(timer);
   }, []);
+
+  // Cycle through roles every 3 seconds (1s appear + 1s stay + 1s disappear)
+  useEffect(() => {
+    if (!isLoaded) return;
+    
+    const interval = setInterval(() => {
+      setCurrentRoleIndex((prev) => (prev + 1) % roles.length);
+    }, 3000);
+
+    return () => clearInterval(interval);
+  }, [isLoaded]);
 
   const handleMouseMove = (e: React.MouseEvent) => {
     const rect = containerRef.current?.getBoundingClientRect();
@@ -92,21 +106,25 @@ const LuxuryHeroSection = () => {
         style={{ y, opacity }}
       >
         <div className="text-center max-w-6xl mx-auto">
-          {/* Subtitle with staggered blur reveal */}
+          {/* Subtitle with rotating roles */}
           <motion.div
-            className="mb-10 overflow-hidden"
+            className="mb-10 overflow-hidden h-8"
             initial={{ opacity: 0 }}
             animate={isLoaded ? { opacity: 1 } : {}}
             transition={{ delay: 0.3, duration: 1.5 }}
           >
-            <motion.p
-              className="text-xs tracking-[0.5em] uppercase text-silver/70 font-sans font-light"
-              initial={{ opacity: 0, filter: "blur(20px)", y: 20 }}
-              animate={isLoaded ? { opacity: 1, filter: "blur(0px)", y: 0 } : {}}
-              transition={{ delay: 0.6, duration: 1.5, ease: [0.23, 1, 0.32, 1] }}
-            >
-              Junior Software Engineer • UI/UX Designer • AI Enthusiast
-            </motion.p>
+            <AnimatePresence mode="wait">
+              <motion.p
+                key={currentRoleIndex}
+                className="text-xs tracking-[0.5em] uppercase text-silver/70 font-sans font-light"
+                initial={{ opacity: 0, filter: "blur(20px)", y: 20 }}
+                animate={{ opacity: 1, filter: "blur(0px)", y: 0 }}
+                exit={{ opacity: 0, filter: "blur(20px)", y: -20 }}
+                transition={{ duration: 0.6, ease: [0.23, 1, 0.32, 1] }}
+              >
+                {roles[currentRoleIndex]}
+              </motion.p>
+            </AnimatePresence>
           </motion.div>
 
           {/* Main name with mask + light sweep reveal */}

@@ -11,8 +11,14 @@ const education = [
   {
     degree: "Diploma in Information Technology",
     institution: "University of Hertfordshire",
-    status: "Completed",
+    status: "Undergraduate",
     focus: "Computer Science Foundations",
+  },
+  {
+    degree: "G.C.E. A/L (Maths Stream)",
+    institution: "St. Joseph's Girls' College",
+    status: "Completed",
+    focus: "Combine Maths, Physics & Chemistry",
   },
 ];
 

@@ -1,6 +1,6 @@
 import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion";
 import { useState, useEffect } from "react";
-import { Menu, X } from "lucide-react";
+import { Menu, X, Download } from "lucide-react";
 import { useMagneticEffect } from "@/hooks/useLuxuryEffects";
 
 const navLinks = [
@@ -80,6 +80,17 @@ const LuxuryNavigation = () => {
 
   const closeMobileMenu = () => setMobileMenuOpen(false);
 
+  const handleDownloadCV = () => {
+    // Replace 'YOUR_CV_URL' with your actual CV file URL
+    const cvUrl = "YOUR_CV_URL"; // e.g., "/cv/Tharuka_Karunarathne_Resume.pdf"
+    const link = document.createElement("a");
+    link.href = cvUrl;
+    link.download = "Tharuka_Karunarathne_Resume.pdf";
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
   return (
     <>
       <motion.nav
@@ -99,16 +110,15 @@ const LuxuryNavigation = () => {
 
         <div className="container mx-auto relative z-10">
           <div className="flex items-center justify-between">
-            <motion.a
-              href="#"
+            {/* Logo placeholder - removed T */}
+            <motion.div
               className="font-serif text-xl font-light text-metallic"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 1, delay: 0.5 }}
-              whileHover={{ scale: 1.05 }}
             >
-              T
-            </motion.a>
+              {/* Empty space where T logo was */}
+            </motion.div>
 
             <div className="hidden md:flex items-center gap-10">
               {navLinks.map((link, index) => (
@@ -123,17 +133,18 @@ const LuxuryNavigation = () => {
             </div>
 
             <div className="flex items-center gap-3">
-              <motion.div
-                className="hidden sm:flex items-center gap-3"
+              {/* Download CV Button */}
+              <motion.button
+                onClick={handleDownloadCV}
+                className="hidden sm:flex items-center gap-2 px-4 py-2.5 rounded-full border border-silver/15 bg-background/30 text-muted-foreground hover:text-foreground hover:border-silver/30 transition-all duration-300"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ duration: 1, delay: 1.2 }}
+                whileHover={{ y: -2 }}
               >
-                <span className="w-2 h-2 rounded-full bg-accent animate-pulse" />
-                <span className="text-xs font-mono text-muted-foreground/60">
-                  AVAILABLE FOR WORK
-                </span>
-              </motion.div>
+                <Download size={16} />
+                <span className="text-xs font-mono">CV</span>
+              </motion.button>
 
               <button
                 type="button"
@@ -183,14 +194,29 @@ const LuxuryNavigation = () => {
                   </motion.a>
                 ))}
 
-                <motion.a
-                  href="#contact"
-                  onClick={closeMobileMenu}
-                  className="mt-2 inline-flex items-center justify-center rounded-full border border-silver/15 px-4 py-3 text-sm font-medium text-foreground transition-all duration-300 hover:border-silver/30 hover:bg-white/5"
+                <motion.button
+                  onClick={() => {
+                    handleDownloadCV();
+                    closeMobileMenu();
+                  }}
+                  className="mt-2 inline-flex items-center justify-center gap-2 rounded-full border border-silver/15 px-4 py-3 text-sm font-medium text-foreground transition-all duration-300 hover:border-silver/30 hover:bg-white/5"
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: 10 }}
                   transition={{ delay: 0.2 }}
+                >
+                  <Download size={16} />
+                  Download CV
+                </motion.button>
+
+                <motion.a
+                  href="#contact"
+                  onClick={closeMobileMenu}
+                  className="inline-flex items-center justify-center rounded-full border border-silver/15 px-4 py-3 text-sm font-medium text-foreground transition-all duration-300 hover:border-silver/30 hover:bg-white/5"
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: 10 }}
+                  transition={{ delay: 0.25 }}
                 >
                   Let&apos;s Talk
                 </motion.a>

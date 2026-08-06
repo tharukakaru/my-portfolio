@@ -6,26 +6,31 @@ const experiences = [
   {
     title: "Junior Software Engineer",
     company: "CodeGen International",
+    period: "Feb 2025 – Jul 2026",
     description: "Full-stack development, Building Agentic solutions and enterprise software architecture.",
   },
   {
     title: "Junior Software Engineer",
     company: "AbsolX Core AI",
+    period: "Jul 2024 – Mar 2025",
     description: "Building AI-powered solutions and intelligent automation systems for enterprise clients.",
   },
   {
-    title: "Software Developer Intern",
-    company: "Dodget Lawyer",
-    description: "Legal tech solutions and intelligent document automation.",
-  },
-  {
-    title: "Full Stack Developer Intern",
-    company: "Adventa",
+    title: "Full Stack Developer",
+    company: "Adventa Pvt Ltd",
+    period: "Feb 2024 – Jul 2024",
     description: "End-to-end application development and cloud integration.",
   },
   {
-    title: "Full Stack Developer Intern",
+    title: "Software Developer",
+    company: "Dodget Lawyer",
+    period: "Sep 2023 – Feb 2024",
+    description: "Legal tech solutions and intelligent document automation.",
+  },
+  {
+    title: "Full Stack Developer",
     company: "Codex Harbor",
+    period: "Aug 2022 – Aug 2023",
     description: "Modern web applications and API development.",
   },
 ];
@@ -122,7 +127,7 @@ const TimelineItem = ({
 
         {/* Title with blur + slide */}
         <motion.h3
-          className="font-serif text-2xl lg:text-3xl font-light mb-4 text-foreground relative"
+          className="font-serif text-2xl lg:text-3xl font-light mb-2 text-foreground relative"
           initial={{ opacity: 0, x: -40, filter: "blur(10px)" }}
           animate={isInView ? { opacity: 1, x: 0, filter: "blur(0px)" } : {}}
           transition={{ delay: index * 0.1 + 0.4, duration: 1.1, ease: [0.23, 1, 0.32, 1] }}
@@ -135,6 +140,16 @@ const TimelineItem = ({
             {experience.title}
           </motion.span>
         </motion.h3>
+
+        {/* Period/Years - NEW! */}
+        <motion.p
+          className="text-xs tracking-[0.3em] uppercase text-muted-foreground/60 font-mono mb-4"
+          initial={{ opacity: 0, y: 10 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ delay: index * 0.1 + 0.5, duration: 0.6 }}
+        >
+          {experience.period}
+        </motion.p>
 
         {/* Description */}
         <motion.p
